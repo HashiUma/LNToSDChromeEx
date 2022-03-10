@@ -1,6 +1,15 @@
 (() => {
-    let pokes = ScrapingPokemon();
+    let pokes = ScrapingPokemon().slice(0, 6);
+    if (pokes.length < 6) return;
     console.log(pokes);
+
+    let moves;
+    getJSON('contents_script/moves.json').then(function(r) {
+        //JSONファイルを読み込んだ後の処理
+        moves = JSON.parse(r);
+        console.log(moves);
+    })
+
 })();
 
 function ScrapingPokemon() {
@@ -34,7 +43,7 @@ function ScrapingPokemon() {
             } else if (trNode.innerHTML.includes('技')) {
                 let movesNodes = tdNodes[1].querySelectorAll('strong,b');
                 movesNodes.forEach(y => {
-                    y.innerText.split('/').forEach(x => {
+                    y.innerText.replace(/\r?\n/g, '/').split('/').forEach(x => {
                         moves.push(x.trim());
                     });
                 });
