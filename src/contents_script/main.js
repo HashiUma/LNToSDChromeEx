@@ -1,24 +1,28 @@
 (() => {
     let pokes = ScrapingPokemon().slice(0, 6);
     if (pokes.length < 6) return;
+
+    let str = '';
+    pokes.forEach(poke => {
+        str += poke.SDFormat() + '\n\n';
+    });
+
     console.log(pokes);
-
-    let moves;
-    getJSON('contents_script/moves.json').then(function(r) {
-        //JSONファイルを読み込んだ後の処理
-        moves = JSON.parse(r);
-        console.log(moves);
-    })
-
+    console.log(str);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'x' || e.altKey) {
+            console.log(str);
+        }
+    });
 })();
 
 function ScrapingPokemon() {
     let pokes = [];
     const pokeNodes = Array.from(document.querySelectorAll('table')).filter(x => x.innerHTML.includes('実数値'));
     pokeNodes.forEach(node => {
-        let name, item, ability,
-            ivs = [31, 31, 31, 31, 31, 31],
-            evs = [0, 0, 0, 0, 0, 0],
+        let name, item, ability, nature,
+            ivs = ['31', '31', '31', '31', '31', '31'],
+            evs = ['0', '0', '0', '0', '0', '0'],
             moves = [];
         name = node.previousSibling.innerText;
         const trNodes = Array.from(node.querySelectorAll('tr'));
@@ -40,16 +44,18 @@ function ScrapingPokemon() {
                 }
             } else if (trNode.innerHTML.includes('持ち物')) {
                 item = tdNodes[1].innerText.trim();
+            } else if (trNode.innerHTML.includes('性格')) {
+                nature = tdNodes[1].innerText.trim();
             } else if (trNode.innerHTML.includes('技')) {
                 let movesNodes = tdNodes[1].querySelectorAll('strong,b');
                 movesNodes.forEach(y => {
                     y.innerText.replace(/\r?\n/g, '/').split('/').forEach(x => {
-                        moves.push(x.trim());
+                        if (x.trim() !== '') moves.push(x.trim());
                     });
                 });
             }
         });
-        pokes.push(new Pokemon(name, item, ability, moves, ivs, evs));
+        pokes.push(new Pokemon(name, item, ability, nature, moves, ivs, evs));
     });
 
     return pokes;

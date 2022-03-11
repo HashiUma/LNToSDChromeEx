@@ -8,6 +8,11 @@
             "https://liberty-note.com/*"
         ],
         "js": [
+            "data/pokejp2en.js",
+            "data/itemjp2en.js",
+            "data/movejp2en.js",
+            "data/naturejp2en.js",
+            "data/abilityjp2en.js",
             "contents_script/model/pokemon.js",
             "contents_script/main.js"
         ]
