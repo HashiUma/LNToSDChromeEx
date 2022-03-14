@@ -13,6 +13,8 @@
             "data/movejp2en.js",
             "data/naturejp2en.js",
             "data/abilityjp2en.js",
+            "data/pokesuffix.js",
+            "contents_script/util.js",
             "contents_script/model/pokemon.js",
             "contents_script/main.js"
         ]

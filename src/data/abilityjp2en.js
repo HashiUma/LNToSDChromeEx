@@ -1,3 +1,8 @@
+const uniqueAblity = {
+    "Calyrex-Shadow": "As One (Spectrier)",
+    "Calyrex-Ice": "As One (Glastrier)",
+};
+
 const abilityJ2E = {
     "ARシステム": "RKS System",
     "アイスフェイス": "Ice Face",
