@@ -9,13 +9,13 @@ function CreatePokeModal(pokes) {
 
     const modalElement = document.createElement('div');
     modalElement.style.cssText = `
-    max-height: 0;
+    max-height: 0px;
     overflow: hidden;
     transition: all .6s;
     background-color:white;
     border: solid;
-    border-width:0px 5px 5px 5px;
-    border-color:#e87c02;
+    border-width:0px 5px 0px 5px;
+    border-color:#cccccc;
     `;
 
     wrapper.style = cssText = `
@@ -24,12 +24,31 @@ function CreatePokeModal(pokes) {
     right: 40px;
     z-index: 10000;
     `;
+
+    let bgcolor = true;
     pokes.forEach(poke => {
-        modalElement.appendChild(CreatePokeElement(poke));
+        modalElement.appendChild(CreatePokeElement(poke, bgcolor));
+        bgcolor = !bgcolor;
     });
 
-    const copyButton = document.createElement('button');
-    copyButton.innerText = 'All Copy';
+    const copyButton = document.createElement('div');
+    copyButton.innerText = '全てコピー';
+    copyButton.style.cssText = `
+        background-color:#bbbbbb;
+        color:white;
+        border-radius: 5px 5px 5px 5px;
+        padding:4px 10px 4px 10px;
+        margin:2px auto 2px auto;
+        cursor:pointer;
+        width:25%;
+        text-align:center;
+    `;
+    copyButton.addEventListener('mouseover', () => {
+        copyButton.style.backgroundColor = '#aaaaaa';
+    });
+    copyButton.addEventListener('mouseleave', () => {
+        copyButton.style.backgroundColor = '#bbbbbb';
+    });
     copyButton.addEventListener('click', () => {
         let str = '';
         pokes.forEach(poke => {
@@ -39,23 +58,24 @@ function CreatePokeModal(pokes) {
     });
 
     const openbutton = document.createElement('div');
-    openbutton.innerText = '▲';
+    openbutton.innerText = '▲ SDエクスポート';
     openbutton.style.cssText = `
-        background-color:#e87c02;
+        background-color:#cccccc;
         color:white;
         cursor:pointer;
         font-size:1.5em;
         text-align:center;
         border-radius: 15px 15px 0 0;
+        padding:5px 0 2px 0;
     `;
     openbutton.open = false;
     openbutton.addEventListener('click', () => {
         if (openbutton.open) {
             modalElement.style.maxHeight = '0px';
-            openbutton.innerText = '▲';
+            openbutton.innerText = '▲ SDエクスポート';
         } else {
-            modalElement.style.maxHeight = '600px';
-            openbutton.innerText = '▼';
+            modalElement.style.maxHeight = '800px';
+            openbutton.innerText = '▼ SDエクスポート';
         }
         openbutton.open = !openbutton.open;
     });
@@ -66,14 +86,13 @@ function CreatePokeModal(pokes) {
     document.body.appendChild(wrapper);
 }
 
-function CreatePokeElement(poke) {
+function CreatePokeElement(poke, bgcolor) {
     const pokeDiv = document.createElement('div');
     pokeDiv.style.cssText = `
-        margin:5px 15px 15px 5px;
-        border:solid;
-        border-width:0px 0px 3px 0px;
-        border-color:#e87c02;    
+        padding:10px 20px 10px 20px;
     `;
+    pokeDiv.style.backgroundColor = bgcolor ? '#efefef' : '#fdfdfd';
+
     const nameInput = document.createElement('input');
     nameInput.value = poke.name;
     nameInput.disabled = true;
@@ -95,8 +114,22 @@ function CreatePokeElement(poke) {
         suffixSelect.disabled = true;
     }
 
-    const copyButton = document.createElement('button');
-    copyButton.innerText = 'Copy';
+    const copyButton = document.createElement('span');
+    copyButton.innerText = 'コピー';
+    copyButton.style.cssText = `
+        background-color:#bbbbbb;
+        color:white;
+        border-radius: 5px 5px 5px 5px;
+        padding:2px 10px 2px 10px;
+        margin-left:5px;
+        cursor:pointer;
+    `;
+    copyButton.addEventListener('mouseover', () => {
+        copyButton.style.backgroundColor = '#aaaaaa';
+    });
+    copyButton.addEventListener('mouseleave', () => {
+        copyButton.style.backgroundColor = '#bbbbbb';
+    });
     copyButton.addEventListener('click', () => {
         util.CopyClipBoard(poke.SDFormat());
     });
@@ -105,7 +138,10 @@ function CreatePokeElement(poke) {
     div1.innerText =
         `特性：${poke.ability}　性格：${poke.nature}　持ち物：${poke.item} 
     努力値（個体値）：${poke.statsStringfy()}
-    技：${poke.moves[0]}, ${poke.moves[1]}, ${poke.moves[2]}, ${poke.moves[3]}
+    技：${poke.moves[0]}, ${poke.moves[1]}, ${poke.moves[2]}, ${poke.moves[3]}`;
+    div1.style.cssText = `
+        padding:5px 0 0 0;
+        line-height:1.2em;
     `;
 
     pokeDiv.appendChild(nameInput);
