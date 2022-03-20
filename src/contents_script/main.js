@@ -4,6 +4,7 @@
     CreatePokeModal(pokes)
 })();
 
+//モーダル全体作成
 function CreatePokeModal(pokes) {
     const wrapper = document.createElement('div');
 
@@ -151,6 +152,7 @@ function CreatePokeElement(poke, bgcolor) {
     return pokeDiv;
 }
 
+//構築記事紹介ページからポケモンのデータを取得する
 function ScrapingPokemon() {
     let pokes = [];
     const pokeNodes = Array.from(document.querySelectorAll('table')).filter(x => x.innerHTML.includes('実数値'));

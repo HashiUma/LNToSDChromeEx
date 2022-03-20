@@ -36,7 +36,7 @@ class Pokemon {
                 regex = new RegExp('\\(.*?' + key + '.*?\\)$', 'i');
                 if (name.match(regex)) {
                     name = pokeJ2E[name.replace(regex, '')];
-                    suffix = 'Gmax';
+                    suffix = value;
                 }
             }
             //キョダイマックス対応
