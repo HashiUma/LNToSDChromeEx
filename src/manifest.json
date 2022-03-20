@@ -8,6 +8,7 @@
             "https://liberty-note.com/*"
         ],
         "js": [
+            "lib/toastify.js",
             "data/pokejp2en.js",
             "data/itemjp2en.js",
             "data/movejp2en.js",
@@ -17,6 +18,9 @@
             "contents_script/util.js",
             "contents_script/model/pokemon.js",
             "contents_script/main.js"
+        ],
+        "css": [
+            "lib/toastify.css"
         ]
     }]
 }

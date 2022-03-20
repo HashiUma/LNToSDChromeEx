@@ -1,12 +1,18 @@
 const util = {
     CopyClipBoard: function(value) {
         if (!navigator.clipboard) {
-            console.log('Clipboard API not available')
+            Toastify({
+                text: "コピー機能(navigator.clipboard)を利用できません。",
+                duration: 2000
+            }).showToast();
             return
         }
         navigator.clipboard.writeText(value).then(
             () => {
-                console.log('Copy Done!');
+                Toastify({
+                    text: "コピーしました。",
+                    duration: 2000
+                }).showToast();
             },
             () => {
                 console.log('Copy False!');

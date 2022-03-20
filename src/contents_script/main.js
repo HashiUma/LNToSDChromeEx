@@ -16,7 +16,7 @@ function CreatePokeModal(pokes) {
     background-color:white;
     border: solid;
     border-width:0px 5px 0px 5px;
-    border-color:#cccccc;
+    border-color:#e87c02;
     `;
 
     wrapper.style = cssText = `
@@ -35,20 +35,20 @@ function CreatePokeModal(pokes) {
     const copyButton = document.createElement('div');
     copyButton.innerText = '全てコピー';
     copyButton.style.cssText = `
-        background-color:#bbbbbb;
+        background-color:#e87c02;
         color:white;
         border-radius: 5px 5px 5px 5px;
         padding:4px 10px 4px 10px;
-        margin:2px auto 2px auto;
+        margin:2px auto 10px auto;
         cursor:pointer;
         width:25%;
         text-align:center;
     `;
     copyButton.addEventListener('mouseover', () => {
-        copyButton.style.backgroundColor = '#aaaaaa';
+        copyButton.style.backgroundColor = '#f88c12';
     });
     copyButton.addEventListener('mouseleave', () => {
-        copyButton.style.backgroundColor = '#bbbbbb';
+        copyButton.style.backgroundColor = '#e87c02';
     });
     copyButton.addEventListener('click', () => {
         let str = '';
@@ -61,7 +61,7 @@ function CreatePokeModal(pokes) {
     const openbutton = document.createElement('div');
     openbutton.innerText = '▲ SDエクスポート';
     openbutton.style.cssText = `
-        background-color:#cccccc;
+        background-color:#e87c02;
         color:white;
         cursor:pointer;
         font-size:1.5em;
@@ -118,7 +118,7 @@ function CreatePokeElement(poke, bgcolor) {
     const copyButton = document.createElement('span');
     copyButton.innerText = 'コピー';
     copyButton.style.cssText = `
-        background-color:#bbbbbb;
+        background-color:#e87c02;
         color:white;
         border-radius: 5px 5px 5px 5px;
         padding:2px 10px 2px 10px;
@@ -126,10 +126,10 @@ function CreatePokeElement(poke, bgcolor) {
         cursor:pointer;
     `;
     copyButton.addEventListener('mouseover', () => {
-        copyButton.style.backgroundColor = '#aaaaaa';
+        copyButton.style.backgroundColor = '#f88c12';
     });
     copyButton.addEventListener('mouseleave', () => {
-        copyButton.style.backgroundColor = '#bbbbbb';
+        copyButton.style.backgroundColor = '#e87c02';
     });
     copyButton.addEventListener('click', () => {
         util.CopyClipBoard(poke.SDFormat());
@@ -162,6 +162,9 @@ function ScrapingPokemon() {
             evs = ['0', '0', '0', '0', '0', '0'],
             moves = [];
         name = node.previousSibling.innerText;
+        if (name === '') {
+            name = node.previousSibling.previousSibling.innerText;
+        }
         const trNodes = Array.from(node.querySelectorAll('tr'));
         trNodes.forEach(trNode => {
             const tdNodes = trNode.querySelectorAll('td');
@@ -179,6 +182,10 @@ function ScrapingPokemon() {
                 if (statsStr.includes('S個体値0')) {
                     ivs[5] = 0;
                 }
+                if (statsStr.includes('S0個体')) {
+                    ivs[5] = 0;
+                }
+
             } else if (trNode.innerHTML.includes('持ち物')) {
                 item = tdNodes[1].innerText.trim();
             } else if (trNode.innerHTML.includes('性格')) {
