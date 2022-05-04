@@ -118,7 +118,7 @@ class Pokemon {
             if (this.evs[i] !== '0') tmp.push(' ' + this.evs[i] + ' ' + Pokemon.statsName[i] + ' ');
         }
         s += tmp.join('/') + '\n';
-        s += this.nature + ' Nature' + '\n';
+        s += this.nature + ' Nature' + '  \n';
         tmp = [];
         for (let i = 0; i < this.ivs.length; i++) {
             if (this.ivs[i] !== '31') tmp.push(' ' + this.ivs[i] + ' ' + Pokemon.statsName[i] + ' ');
